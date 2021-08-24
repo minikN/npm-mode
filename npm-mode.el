@@ -58,8 +58,11 @@
 (defvar npm-mode--modeline-name " npm"
   "Name of npm mode modeline name.")
 
+(defvar npm-mode--npm-executable "npm"
+  "Name of the npm executable to run.")
+
 (defun npm-mode--ensure-npm-module ()
-  "Asserts that you're currently inside an npm module"
+  "Asserts that you're currently inside an npm module."
   (npm-mode--project-file))
 
 (defun npm-mode--project-file ()
@@ -121,33 +124,33 @@ nil."
 (defun npm-mode-npm-init ()
   "Run the npm init command."
   (interactive)
-  (npm-mode--exec-process "npm init"))
+  (npm-mode--exec-process (concat npm-mode--npm-executable " init")))
 
 (defun npm-mode-npm-install ()
   "Run the 'npm install' command."
   (interactive)
-  (npm-mode--exec-process "npm install"))
+  (npm-mode--exec-process (concat npm-mode--npm-executable " install")))
 
 (defun npm-mode-npm-install-save (dep)
   "Run the 'npm install --save' command for DEP."
   (interactive "sEnter package name: ")
-  (npm-mode--exec-process (format "npm install %s --save" dep)))
+  (npm-mode--exec-process (concat npm-mode--npm-executable (format " install %s --save" dep))))
 
 (defun npm-mode-npm-install-save-dev (dep)
   "Run the 'npm install --save-dev' command for DEP."
   (interactive "sEnter package name: ")
-  (npm-mode--exec-process (format "npm install %s --save-dev" dep)))
+  (npm-mode--exec-process (concat npm-mode--npm-executable (format " install %s --save-dev" dep))))
 
 (defun npm-mode-npm-uninstall ()
   "Run the 'npm uninstall' command."
   (interactive)
   (let ((dep (completing-read "Uninstall dependency: " (npm-mode--get-project-dependencies))))
-    (npm-mode--exec-process (format "npm uninstall %s" dep))))
+    (npm-mode--exec-process (concat npm-mode--npm-executable (format " uninstall %s" dep)))))
 
 (defun npm-mode-npm-list ()
   "Run the 'npm list' command."
   (interactive)
-  (npm-mode--exec-process "npm list --depth=0"))
+  (npm-mode--exec-process (concat npm-mode--npm-executable " list --depth=0")))
 
 (defun npm-run--read-command ()
   (completing-read "Run script: " (npm-mode--get-project-scripts)))
